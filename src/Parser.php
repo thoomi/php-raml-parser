@@ -395,7 +395,7 @@ class Parser
      */
     private function parseResourceTypes($ramlData)
     {
-        if (isset($ramlData['resourceTypes'])) {
+        if (isset($ramlData['resourceTypes']) && (is_array($ramlData['resourceTypes']) || $ramlData['resourceTypes'] instanceof Traversable)) {
             $keyedTraits = [];
             foreach ($ramlData['resourceTypes'] as $trait) {
                 foreach ($trait as $k => $t) {
@@ -423,7 +423,7 @@ class Parser
      */
     private function parseTraits($ramlData)
     {
-        if (isset($ramlData['traits'])) {
+        if (isset($ramlData['traits']) && (is_array($ramlData['traits']) || $ramlData['traits'] instanceof Traversable)) {
             $keyedTraits = [];
             foreach ($ramlData['traits'] as $trait) {
                 foreach ($trait as $k => $t) {

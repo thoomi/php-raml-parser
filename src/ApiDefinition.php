@@ -229,7 +229,8 @@ class ApiDefinition implements ArrayInstantiationInterface
             }
         }
 
-        if (isset($data['documentation'])) {
+        if (isset($data['documentation']) && (is_array($data['documentation']) || $data['documentation'] instanceof Traversable)) {
+
             foreach ($data['documentation'] as $title => $documentation) {
                 $apiDefinition->addDocumentation($title, $documentation);
             }
@@ -240,6 +241,12 @@ class ApiDefinition implements ArrayInstantiationInterface
         foreach ($data as $resourceName => $resource) {
             // check if actually a resource
             if (strpos($resourceName, '/') === 0) {
+
+                if (!is_array($resource))
+                {
+                    $resource = array();
+                }
+
                 $apiDefinition->addResource(
                     Resource::createFromArray(
                         $resourceName,
